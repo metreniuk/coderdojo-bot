@@ -1,40 +1,34 @@
-const Discord = require("discord.io")
-const logger = require("winston")
-const auth = require("./auth.json")
+const Discord = require("discord.js")
 
-// Configure logger settings
-logger.remove(logger.transports.Console)
-logger.add(new logger.transports.Console(), {
-  colorize: true,
-})
-logger.level = "debug"
-// Initialize Discord Bot
-const bot = new Discord.Client({
-  token: auth.token,
-  autorun: true,
-})
-bot.on("ready", function(evt) {
-  logger.info("Connected")
-  logger.info("Logged in as: ")
-  logger.info(bot.username + " - (" + bot.id + ")")
-})
-bot.on("message", function(user, userID, channelID, message, evt) {
-  // Our bot needs to know if it will execute a command
-  // It will listen for messages that will start with `!`
-  if (message.substring(0, 1) == "!") {
-    const args = message.substring(1).split(" ")
-    const cmd = args[0]
+const { handlers } = require("./handlers")
 
-    args = args.splice(1)
-    switch (cmd) {
-      // !ping
-      case "ping":
-        bot.sendMessage({
-          to: channelID,
-          message: "Pong!",
-        })
-        break
-      // Just add any case commands if you want to..
-    }
+const botName = "coderdojo-bot"
+
+const client = new Discord.Client()
+
+client.on("ready", () => {
+  console.log(`Logged in as ${client.user.tag}!`)
+})
+
+client.on("message", msg => {
+  const { channel, content, author } = msg
+  const { type, recipient } = channel
+  const { username } = recipient
+  const { username: authorName } = author
+
+  if (type !== "dm" || authorName === botName) return
+
+  let response
+  try {
+    console.log({ handlers })
+    console.log(handlers[authorName])
+    response = handlers[authorName](content)
+  } catch (e) {
+    console.log("BOT ERROR:")
+    console.log(e)
   }
+
+  channel.send(response)
 })
+
+module.exports = { client }
