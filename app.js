@@ -1,21 +1,22 @@
 const express = require("express")
 const bodyParser = require("body-parser")
+const path = require("path")
 const fs = require("fs")
 
 const { token } = require("./config.json")
 const { client } = require("./bot")
 const { addHandler } = require("./handlers")
 
-const htmlFile = fs.readFileSync("./client.html", "utf-8")
-
 const app = express()
-const port = 3000
+const port = 8080
+
+app.use(express.static(path.join(__dirname, "client", "build")))
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get("/", (req, res) => {
-  res.send(htmlFile)
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"))
 })
 
 app.post("/:username", (req, res) => {
