@@ -10,21 +10,19 @@ const { addHandler } = require("./handlers")
 const app = express()
 const port = 8080
 
-app.use(express.static(path.join(__dirname, "client", "build")))
+// app.use(express.static(path.join(__dirname, "client", "build")))
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "build", "index.html"))
+  // res.sendFile(path.join(__dirname, "client", "build", "index.html"))
+  res.sendFile(path.join(__dirname, "client.html"))
 })
 
-app.post("/:username", (req, res) => {
-  const {
-    params: { username },
-    body,
-  } = req
-  const { handler } = body
+app.post("/", (req, res) => {
+  const { body } = req
+  const { handler, username } = body
 
   addHandler(username, handler)
 
