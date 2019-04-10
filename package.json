@@ -5,15 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./index.js",
-    "dev": "nodemon ./index.js"
+    "start": "node ./server/app.js",
+    "dev": "nodemon ./server/app.js"
   },
   "author": "Alexandr Metreniuc <metreniuk@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
     "discord.js": "^11.4.2",
-    "express": "^4.16.4",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
     "nodemon": "^1.18.10"
   }
 }

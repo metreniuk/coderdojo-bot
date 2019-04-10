@@ -29,6 +29,8 @@ app.post("/", (req, res) => {
   res.status(200).send("ok")
 })
 
+module.exports = { app }
+
 app.listen(port, () => {
   client.login(token)
 
