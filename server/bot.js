@@ -4,13 +4,13 @@ const { handlers } = require("./handlers")
 
 const botName = "coderdojo-bot"
 
-const client = new Discord.Client()
+const bot = new Discord.Client()
 
-client.on("ready", () => {
-  console.log(`Logged in as ${client.user.tag}!`)
+bot.on("ready", () => {
+  console.log(`Logged in as ${bot.user.tag}!`)
 })
 
-client.on("message", msg => {
+bot.on("message", msg => {
   try {
     const { channel, content, author } = msg
     const { type, recipient } = channel
@@ -31,4 +31,4 @@ client.on("message", msg => {
   }
 })
 
-module.exports = { client }
+module.exports = { bot }

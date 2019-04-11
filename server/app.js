@@ -3,12 +3,15 @@ const bodyParser = require("body-parser")
 const path = require("path")
 const fs = require("fs")
 
-const { token } = require("./config.json")
-const { client } = require("./bot")
+require("dotenv").config()
+
+const { bot } = require("./bot")
+const { dbClient } = require("./db")
 const { addHandler } = require("./handlers")
 
 const app = express()
 const port = process.env.PORT || 8080
+const botToken = process.env.BOT_TOKEN
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -26,10 +29,23 @@ app.post("/", (req, res) => {
   res.status(200).send("ok")
 })
 
-module.exports = { app }
-
 app.listen(port, () => {
-  client.login(token)
+  bot.login(botToken)
+
+  // dbClient.connect()
+
+  // dbClient.query(
+  //   "SELECT table_schema,table_name FROM information_schema.tables;",
+  //   (err, res) => {
+  //     if (err) throw err
+  //     for (let row of res.rows) {
+  //       console.log(JSON.stringify(row))
+  //     }
+  //     client.end()
+  //   }
+  // )
 
   console.log(`Example app listening on port ${port}!`)
 })
+
+module.exports = { app }
