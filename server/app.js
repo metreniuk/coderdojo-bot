@@ -1,12 +1,11 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const path = require("path")
-const fs = require("fs")
 
 require("dotenv").config()
 
 const { bot } = require("./bot")
-const { dbClient } = require("./db")
+// const { dbClient } = require("./db")
 const { addHandler } = require("./handlers")
 
 const app = express()
@@ -45,6 +44,7 @@ app.listen(port, () => {
   //   }
   // )
 
+  // eslint-disable-next-line
   console.log(`Example app listening on port ${port}!`)
 })
 

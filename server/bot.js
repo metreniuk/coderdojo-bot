@@ -7,26 +7,26 @@ const botName = "coderdojo-bot"
 const bot = new Discord.Client()
 
 bot.on("ready", () => {
+  // eslint-disable-next-line
   console.log(`Logged in as ${bot.user.tag}!`)
 })
 
 bot.on("message", msg => {
   try {
     const { channel, content, author } = msg
-    const { type, recipient } = channel
-    const { username } = recipient
+    const { type } = channel
+
     const { username: authorName } = author
 
     if (type !== "dm" || authorName === botName) return
 
-    let response
-    console.log({ handlers })
-    console.log(handlers[authorName])
-    response = handlers[authorName](content)
+    const response = handlers[authorName](content)
 
     channel.send(response)
   } catch (e) {
+    // eslint-disable-next-line
     console.log("BOT ERROR:")
+    // eslint-disable-next-line
     console.log(e)
   }
 })
