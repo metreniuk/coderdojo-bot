@@ -43,7 +43,7 @@ app.post("/", (req, res) => {
 })
 
 app.listen(port, () => {
-  bot.login(botToken)
+  bot.login("NTYzOTkxMDQ4OTA5NzUwMjc1.XKhXow.iiEutHyae8yS3arzQyPnuyIahBs")
 
   // dbClient.connect()
 
