@@ -6,7 +6,7 @@ require("dotenv").config()
 
 const { bot } = require("./bot")
 // const { dbClient } = require("./db")
-const { addHandler } = require("./handlers")
+const { addHandler, handlers } = require("./handlers")
 
 const app = express()
 const port = process.env.PORT || 8080
@@ -17,6 +17,20 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "client.html"))
+})
+
+app.get("/check", (req, res) => {
+  const stringifiedHandlers = Object.entries(handlers).map(([key, value]) => ({
+    [key]: value
+      .toString()
+      .split("\n")
+      .join("\n")
+      .split("\r")
+      .join(" ")
+      .slice(14),
+  }))
+  console.log("/check", stringifiedHandlers)
+  res.status(200).json(stringifiedHandlers)
 })
 
 app.post("/", (req, res) => {
