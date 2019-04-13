@@ -24,7 +24,7 @@ app.get("/check", (req, res) => {
     [key]: value
       .toString()
       .split("\n")
-      .join("\n")
+      .join(" ")
       .split("\r")
       .join(" ")
       .slice(14),
